@@ -35,6 +35,7 @@ class App extends Component {
       return res.json();
     })
     .then((res)=>{
+      console.log(res);
       if(res.access_token !== undefined){
         cookies.save('access_token', res.access_token);
         this.props.history.push('/about');
