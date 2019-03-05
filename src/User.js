@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import Loader from './Loader';
 
 class User extends Component {
     
     constructor(){
         super();
         this.state = {
-            users: []
+            users: [],
+            loader: false
         };
     }
     componentWillMount(){
@@ -13,6 +15,9 @@ class User extends Component {
     }
 
     componentDidMount(){
+        this.setState({
+            loader: true
+        });
         fetch("https://randomuser.me/api/?results=50")
         .then((res)=>{
             return res.json();
@@ -25,6 +30,11 @@ class User extends Component {
         })
         .catch((err)=>{
             console.log(err);
+        })
+        .finally(() => {
+            this.setState({
+                loader: false
+            });
         })
     }
 
@@ -46,7 +56,7 @@ class User extends Component {
                         })
                     }
                 </ul>
-
+                    <Loader loader={this.state.loader}/>
             </div>
         );
     }
